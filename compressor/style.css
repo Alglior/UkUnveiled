@@ -1,0 +1,160 @@
+.container {
+    text-align: center;
+    padding: 20px;
+}
+#imagePreviewContainer {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    margin-top: 20px;
+    padding: 200px;
+    border: 1px solid #ddd; /* Light gray border */
+    background-color: #f8f8f8; /* Light gray background */
+    border-radius: 10px;
+}
+
+#imagePreviewContainer img {
+    max-width: 500px; /* Maximum width for each image */
+    margin: 500px; /* Spacing around each image */
+    border-radius: 5px; /* Rounded corners for images */
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.2); /* Subtle shadow for depth */
+}
+
+
+/* Styles for the file input */
+#imageInput {
+    font-size: 25px; /* Larger font size makes the button and text bigger */
+    padding: 2% 2%; /* Add padding for a larger clickable area */
+    border: 2px solid #007bff; /* A solid border for better visibility */
+    border-radius: 5px; /* Rounded corners for a modern look */
+    cursor: pointer; /* Cursor changes to indicate it's clickable */
+    margin-bottom: 20px; /* Spacing below the input */
+    background-color: #fff; /* White background */
+    color: #007bff; /* Text color to match the border */
+}
+
+#imageInput:hover {
+    background-color: #e7f3ff; /* Slight background color change on hover */
+}
+
+.quality-buttons {
+    margin: 10px 0;
+    text-align: center;
+}
+
+.quality-btn {
+    background-color: #007bff; /* Blue background */
+    color: white; /* White text */
+    border: none;
+    padding: 8px 15px;
+    margin: 5px;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.quality-btn:hover {
+    background-color: #0056b3; /* Darker shade of blue on hover */
+}
+
+#downloadZipBtnContainer {
+    text-align: center;
+    margin-top: 20px;
+}
+
+#downloadZipBtnContainer a, /* If the download link is an <a> element */
+#downloadZipBtnContainer button { /* If the download link is a <button> element */
+    background-color: #007bff; /* Blue background */
+    color: white; /* White text */
+    border: none;
+    padding: 8px 15px;
+    margin: 5px;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+    text-decoration: none; /* Remove underline from <a> elements */
+    transition: background-color 0.3s, color 0.3s;
+}
+
+#downloadZipBtnContainer a:hover,
+#downloadZipBtnContainer button:hover {
+    background-color: #0056b3; /* Darker shade of blue on hover */
+}
+
+
+
+.button-container {
+    position: relative;
+    display: inline-block;
+    
+}
+
+#toggleButton {
+    width: 100%;
+    height: 72px;
+    background: #0066CC;
+    margin: auto;
+    text-align: center;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+    border: none; /* Remove border */
+    outline: none; /* Remove focus outline */
+    cursor: pointer; /* Change cursor to pointer to indicate it's clickable */
+    padding: 10px 20px; /* Add padding: 10px top and bottom, 20px left and right */    
+    color: white; /* Change text color if needed */
+    font-size: 1em; /* Adjust font size if needed */
+    font: bold 100% 'georgia', times, serif;
+
+}
+#toggleButton:hover {
+    color: #FFF; /* Text color changes to white */
+    background: #004080; /* Background color changes on hover */
+}
+
+.hidden {
+    display: none;
+}
+
+#additionalButtons {
+    position: absolute;
+    top: 100%; /* Positioned right below the toggleButton */
+    left: 0;
+    display: flex;
+    flex-direction: column; /* Makes the buttons appear in a vertical list */
+    gap: 2px; /* Optional: adds some space between the buttons */
+    width: 100%; /* Ensure the container of button1 and button2 is full width */
+    font: bold 100% 'georgia', times, serif;
+}
+
+.styledButton {
+    width: 100%;
+    height: 42px;
+    background: #0066CC;
+    margin: auto;
+    text-align: center;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    z-index: 1;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 10px 20px;
+    color: white;
+    font-size: 1em;
+    transition: background-color 0.3s, color 0.3s;
+    font: bold 100% 'georgia', times, serif;
+}
+
+.styledButton:hover {
+    color: #FFF;
+    background: #004080;
+}

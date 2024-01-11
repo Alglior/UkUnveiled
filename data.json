@@ -1,0 +1,21 @@
+[
+  {
+    "id": 1,
+    "text": "The European Union: A Journey Through Integration, Expansion, and Future Horizons",
+    "imageUrl": "images/a1.png",
+    "link": "articles/The European Union_ A Journey Through Integration, Expansion, and Future Horizons.html"
+  },
+  {
+    "id": 2,
+    "text": "Shifting Tides: Analyzing the Impact of Brexit and COVID-19 on the UK's Employment Landscape",
+    "imageUrl": "images/a2.png",
+    "link": "articles/Shifting Tides_ Analyzing the Impact of Brexit and COVID-19 on the UK's Employment Landscape.html"
+  },
+  {
+    "id": 2,
+    "text": "Brexit Ballot: The United Kingdom's Historic Decision to Leave the EU",
+    "imageUrl": "images/a4.png",
+    "link": "articles/Brexit_Ballot_The_United_Kingdom's_Historic_Decision_to_Leave_the_EU.html"
+  }
+  
+]

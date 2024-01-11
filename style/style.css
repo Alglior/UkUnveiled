@@ -1,0 +1,664 @@
+/* Basic styling */
+html {
+  height: 100%;
+}
+* {
+  margin: 0;
+  padding: 0;
+}
+
+/* Body styling */
+body {
+  font: normal .80em 'geneva', helvetica, sans-serif;
+  background: #E8E7D5 url(bg.jpg) repeat;
+  color: #000000;
+}
+
+/* Paragraph styling */
+p {
+  padding: 0 0 20px 0;
+  line-height: 1.7em;
+  font-size: 13px; /* Adjust the font size as needed */
+  color: black;
+}
+
+
+/* Image styling */
+img {
+  border: 0;
+}
+
+/* Header styling */
+h1, h2, h3, h4, h5, h6 {
+  font: normal 175% 'georgia', times, serif;
+  color: #3C3C39;
+  margin: 0 0 15px 0;
+  padding: 15px 0 5px 0;
+}
+h2 {
+  font: normal 175% 'georgia', times, serif;
+  color: #4169E1; /* Dark blue color */
+}
+h1{
+font: normal 175% 'georgia', times, serif;
+color:#4169E1;
+}
+/* Heading styles */
+h4, h5, h6 {
+  margin: 0;
+  padding: 0 0 5px 0;
+  font: normal 120% times, serif;
+  color: #0066CC;
+}
+h5, h6 {
+  font: italic 95% times, serif;
+  padding: 0 0 15px 0;
+  color: #000;
+}
+h6 {
+  color: #332B22;
+}
+
+/* Link styles */
+a, a:hover {
+  outline: none;
+  text-decoration: underline;
+  color: darkblue;
+}
+a:hover {
+  text-decoration: none;
+}
+
+/* Float positioning */
+.left {
+  float: left;
+  width: auto;
+  margin-right: 10px;
+}
+.right {
+  float: right;
+  width: auto;
+  margin-left: 10px;
+}
+
+/* Center positioning */
+.center {
+  display: block;
+  text-align: center;
+  margin: 20px auto;
+}
+
+/* Blockquote styling */
+blockquote {
+  margin: 20px 0;
+  padding: 10px 20px 0 20px;
+  border: 1px solid #CDCDB3;
+  background: #FFF;
+}
+
+/* List styling */
+ul {
+  margin: 2px 0 22px 17px;
+}
+ul li {
+  list-style-type: circle;
+  margin: 0 0 6px 0;
+  padding: 0 0 4px 5px;
+}
+
+ol {
+  margin: 8px 0 22px 20px;
+}
+ol li {
+  margin: 0 0 11px 0;
+}
+
+/* Container styles */
+#main, #logo, #menubar, #site_content, #footer {
+  margin-left: auto;
+  margin-right: auto;
+  color: #000000;
+
+}
+
+/* Header section */
+#header {
+  background: #1D1D1D url(header.png) repeat;
+  height: 240px;
+}
+
+/* Logo section */
+#logo {
+  width: 825px;
+  position: relative;
+  height: 168px;
+  display: flex;
+  align-items: center;
+}
+#logo_image {
+  margin-right: 20px;
+}
+#logo_image img {
+  max-height: 60px;
+}
+#logo_text {
+  display: flex;
+  flex-direction: column;
+}
+#logo h1, #logo h2 {
+  font: normal 300% 'georgia', times, serif;
+  border-bottom: 0;
+  text-transform: none;
+  margin: 0;
+}
+#logo_text h1, #logo_text h1 a, #logo_text h1 a:hover {
+  padding: 0;
+  color: #FFF;
+  letter-spacing: 0.1em;
+  text-decoration: none;
+}
+#logo_text h1 a .logo_colour {
+  color: #0066CC;
+}
+#logo_text h2 {
+  font-size: 100%;
+  padding: 4px 0 0 0;
+  color: #DDD;
+}
+
+/* Default styles for the menu bar */
+#menubar {
+  width: 100%;
+  height: 72px;
+  background: #0066CC;
+  margin: auto; /* Center horizontally and vertically */
+  text-align: center;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+  position: relative;
+  z-index: 1;
+}
+
+ul#menu {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+ul#menu li {
+  margin: 0;
+  padding: 0;
+  list-style-type: none; /* Remove bullet points */
+}
+
+ul#menu li a {
+  letter-spacing: 0.1em;
+  font: bold 100% 'georgia', times, serif;
+  display: block;
+  padding: 0.5px 20px;
+  color: #FFF;
+  text-transform: uppercase;
+  text-decoration: none;
+  background: transparent;
+  list-style-type: none; /* Remove bullet points */
+  text-align: center; /* Center horizontally within the button */
+  line-height: 72px; /* Center vertically within the button */
+}
+
+ul#menu li a:hover, ul#menu li.selected a, ul#menu li.selected a:hover {
+  color: #FFF;
+  background: #004080;
+}
+
+/* Updated styles for the menu button on smaller screens */
+#menu-button {
+  display: none; /* Initially hide the menu button */
+  background: #0066CC;
+  padding: 25px 30px;
+  color: #FFF;
+  cursor: pointer;
+  position: absolute;
+  z-index: 2;
+  bottom: 50; /* Position the button at the bottom of the menu */
+  font-weight: bold; /* Make the text bold */
+  font-size: 15px; /* Set the font size to 20 pixels (adjust as needed) */
+  font-family: 'Georgia', 'Times', serif; /* Use Georgia font */
+
+}
+
+/* Media query for smaller screens */
+@media (max-width: 768px) {
+  ul#menu {
+    display: flex;
+    flex-direction: column; /* Display menu items vertically */
+    align-items: center; /* Center-align the items */
+    margin-top: 70px; /* Add space between button and menu items */
+    background: #0066CC; /* Background color for the menu items */
+    width: 100%; /* Set the width to 100% */
+    left: 0; /* Position the button at the left */
+
+  }
+
+  #menu-button {
+    display: block; /* Display the menu button */
+  }
+}
+
+
+
+/* Site content styling */
+#site_content {
+  display: flex;
+  flex-direction: column;
+  min-height: calc(100vh - 640px);
+  width: 80%;
+  overflow: hidden;
+  margin: 0 auto;
+  padding: 20px 24px 20px 37px;
+  background: #FFF;
+}
+
+/* Content section */
+#content ul {
+  margin: 2px 0 22px 0px;
+}
+#content ul li {
+  list-style-type: none;
+  background: url(bullet.png) no-repeat;
+  margin: 0 0 0px 0;
+  padding: 0 0 4px 25px;
+  line-height: 1.5em;
+}
+
+/* Footer styling */
+#footer {
+  width: 100%;
+  height: 70px;
+  padding: 24px 0 10px 0;
+  text-align: center;
+  background: #0066CC;
+  flex-direction: column; /* This makes the items stack vertically */
+  color: #FFF;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+}
+#footer a {
+  color: #FFF;
+  text-decoration: none;
+  flex-direction: column; /* This makes the items stack vertically */
+}
+#footer a:hover {
+  color: #FFF;
+  text-decoration: underline;
+}
+
+/* Search box styling */
+.search {
+  color: #5D5D5D;
+  border: 1px solid #BBB;
+  width: 134px;
+  padding: 4px;
+  font: 100% 'arial', sans-serif;
+}
+
+/* Color options section */
+#colours {
+  height: 0px;
+  text-align: right;
+  padding: 66px 16px 0px 300px;
+}
+
+/* Form styling */
+.form_settings {
+  margin: 15px 0 0 0;
+}
+.form_settings p {
+  padding: 0 0 4px 0;
+}
+.form_settings span {
+  float: left;
+  width: 200px;
+  text-align: left;
+}
+.form_settings input, .form_settings textarea {
+  padding: 5px;
+  width: 299px;
+  font: 100% 'arial';
+  border: 1px solid #E5E5DB;
+  background: #FFF;
+  color: #47433F;
+}
+.form_settings .submit {
+  font: 100% 'arial';
+  border: 1px solid;
+  width: 99px;
+  margin: 0 0 0 212px;
+  height: 33px;
+  padding: 2px 0 3px 0;
+  cursor: pointer;
+  background: #3498db;
+  color: #FFF;
+}
+.form_settings .submit:hover {
+  background: #004080;
+}
+.form_settings textarea, .form_settings select {
+  font: 100% 'arial';
+  width: 299px;
+}
+.form_settings select {
+  width: 310px;
+}
+.form_settings .checkbox {
+  margin: 4px 0;
+  padding: 0;
+  width: 14px;
+  border: 0;
+  background: none;
+}
+
+/* Separator line styling */
+.separator {
+  width: 100%;
+  height: 0;
+  border-top: 1px solid #D9D5CF;
+  border-bottom: 1px solid #FFF;
+  margin: 0 0 20px 0;
+}
+
+/* Table styling */
+table {
+  margin: 10px 0 30px 0;
+}
+table tr th, table tr td {
+  background: #3B3B3B;
+  color: #FFF;
+  padding: 7px 4px;
+  text-align: left;
+}
+table tr td {
+  background: #E8E7D5;
+  color: #47433F;
+  border-top: 1px solid #FFF;
+}
+.nav-button {
+  background-color: white;
+  color: black;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  padding: 5px 10px;
+  cursor: pointer;
+  font-size: 16px;
+  margin: 0 5px;
+}
+
+/* Centered box styling */
+.center-box {
+  width: 837px;
+  overflow: hidden;
+  margin: 0 auto 0 auto;
+  padding: 20px 24px 20px 37px;
+  background: #FFF;
+}
+
+/* Scrollable box styling */
+.scroll-box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 300px;
+  overflow: hidden;
+  position: relative;
+  border: 2px solid #3498db;
+}
+.content-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row-reverse;
+}
+.image-fade {
+  max-height: 50%;
+  opacity: 1;
+  transition: opacity 0.5s ease-in-out;
+}
+.text-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-right: 20px;
+}
+.welcome-heading {
+  font-size: 70px;
+  color: #4169E1;
+
+}
+
+/* Additional site content styling */
+#site_content2 {
+  width: 80%;
+  overflow: hidden;
+  margin: 0 auto 0 auto;
+  padding: 20px 24px 20px 37px;
+  background: #FFF;
+}
+.search-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+}
+#searchInput {
+  padding: 10px;
+  width: 300px;
+  border: 2px solid #0066CC;
+  border-radius: 5px;
+  font-size: 16px;
+  outline: none;
+}
+
+/* Initially hide the search result pagination */
+#pagination-search {
+  display: none;
+}
+
+/* Style for the pagination buttons (you can customize this) */
+.pagination-container li {
+  display: inline-block;
+  padding: 10px 20px;
+  border: 1px solid #ccc;
+  margin-right: 5px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.pagination-container li.active {
+  background-color: #3498db;
+  color: white;
+  
+}
+
+/* Hover effect */
+.pagination-container li:hover {
+  background-color: #004080;
+}
+
+
+
+/* Update styles for the image container */
+#pagination-container {
+    display: flex;
+    flex-wrap: wrap; /* Allow wrapping */
+    justify-content: center; /* Center horizontally */
+    gap: 10px; /* Add some spacing between images */
+}
+
+/* Adjust the width and height of images */
+#pagination-container img {
+  max-width: 100%; /* Adjust the width to fit the container */
+  height: auto;
+	margin-top: 10px;
+}
+
+#pagination-container p {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 450px; /* Adjust the width to your desired value */
+}
+
+#pagination-container a {
+    text-decoration: none;
+		margin-right: 50px;
+		position: relative; /* Add this line */
+        }
+
+#pagination-container img:hover {
+  filter: brightness(70%);
+        }
+
+
+
+/* Update styles for the image container */
+#results {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center; /* Center horizontally */
+}
+
+/* Adjust the width and height of images */
+#results li {
+  list-style: none; /* Remove list item markers */
+  text-align: center; /* Center text within the list item */
+  width: 250px; /* Adjust the width to your desired value */
+}
+
+#results img {
+  max-width: 100%;
+  height: auto;
+  margin-top: 10px;
+}
+
+#results p {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 200px; /* Adjust the width to your desired value */
+}
+
+#results a {
+  text-decoration: none;
+  display: block; /* Add this line to make the entire list item clickable */
+  position: relative;
+  margin-right: 50px;
+}
+
+#results img:hover {
+  filter: brightness(70%);
+}
+  /* Styles for the search input */
+  #searchInput {
+    margin-bottom: 25px;
+    padding: 10px;
+    border: 2px solid #;
+    width: 100%;
+    box-sizing: border-box;
+	font-weight: bold; /* Add this line to make the text bold */
+	color: #000; /* Set text color to black (#000) */
+  }
+.custom-hr {
+    border: 1px solid #3498db; /* Set the border color to royal blue */
+    margin: 20px 0; /* Add some spacing around the line */
+	width:100%;
+}
+    .image-container p,
+    .image-container h4,
+    .image-container h5,
+    .image-container h6 {
+      color: #444;
+    }
+
+
+        /* Add a new style for the categories container */
+        .categories-container {
+            display: flex;
+            flex-wrap: wrap; /* Allow wrapping on smaller screens */
+            justify-content: center; /* Center horizontally */
+            align-items: flex-start; /* Align items at the top */
+
+
+        }
+
+/* Set the width of the category boxes */
+.category {
+    flex: 0 0 calc(33.33% - 20px); /* Adjust the percentage for your desired layout */
+    margin: 0px;
+    padding: 0px;
+    background-color: #f7f7f7;
+	border: 2px solid #3498db;
+	align-items: center;
+
+}
+
+/* Update styles for the image container */
+#customResults {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center; /* Center horizontally */
+}
+
+/* Adjust the width and height of images */
+#customResults .item-container {
+  text-align: center; /* Center text within the list item */
+  width: 250px; /* Adjust the width to your desired value */
+}
+
+#customResults img {
+  max-width: 100%;
+  height: auto;
+  margin-top: 10px;
+}
+
+#customResults a {
+  text-decoration: none;
+  display: block; /* Add this line to make the entire item clickable */
+  position: relative;
+  margin-right: 50px;
+}
+
+#customResults p {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 200px; /* Adjust the width to your desired value */
+}
+
+
+#customResults img:hover {
+  filter: brightness(70%);
+}
+
+.categorybtn {
+  background-color: white;
+  color: black;
+  border: 1px solid #ccc;
+  margin-top: 10px;
+  border-radius: 5px;
+  padding: 5px 10px;
+  cursor: pointer;
+  font-size: 16px;
+  display: inline-block;
+  width: auto;
+  text-decoration: none;
+  text-align: center; /* Center the text */
+}
+
+
+

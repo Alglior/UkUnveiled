@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Leaflet Map</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/papaparse@5/dist/papaparse.min.js"></script>
+
+</head>
+<body>
+    <div id="mapid" style="height: 600px;"></div>
+    <input id="geojson-file" type="file" accept=".geojson" />
+    <input id="csv-file" type="file" accept=".csv" />
+
+    <ul id="layer-control"></ul>
+
+    <script>
+        var mymap = L.map('mapid').setView([51.505, -0.09], 13);
+        var layers = {};
+
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
+            maxZoom: 19,
+        }).addTo(mymap);
+
+        document.getElementById('geojson-file').addEventListener('change', function(e) {
+            var file = e.target.files[0];
+            var reader = new FileReader();
+            reader.onload = function(e) {
+                var contents = e.target.result;
+                var geojson = JSON.parse(contents);
+                var layer = L.geoJSON(geojson).addTo(mymap);
+                var id = Date.now().toString();
+                layers[id] = layer;
+
+                var li = document.createElement('li');
+                li.textContent = file.name;
+                li.id = id;
+
+                var removeButton = document.createElement('button');
+                removeButton.textContent = 'Remove';
+                removeButton.addEventListener('click', function() {
+                    var confirmDelete = confirm('Are you sure you want to delete this layer?');
+                    if (confirmDelete) {
+                        mymap.removeLayer(layers[id]);
+                        delete layers[id];
+                        li.remove();
+                    }
+                });
+
+                var renameButton = document.createElement('button');
+                renameButton.textContent = 'Rename';
+                renameButton.addEventListener('click', function() {
+                    var newName = prompt('Enter new name');
+                    if (newName) {
+                        li.textContent = newName;
+                        li.appendChild(removeButton);
+                        li.appendChild(renameButton);
+                    }
+                });
+
+var colorButton = document.createElement('button');
+colorButton.textContent = 'Change Color';
+colorButton.addEventListener('click', function() {
+    var colorInput = document.createElement('input');
+    colorInput.type = 'color';
+    colorInput.addEventListener('input', function() {
+        layer.setStyle({
+            color: colorInput.value
+        });
+    });
+    colorInput.click();
+});
+var opacityButton = document.createElement('button');
+opacityButton.textContent = 'Change Opacity';
+opacityButton.addEventListener('click', function() {
+    var newOpacity = prompt('Enter new opacity (0.0 - 1.0)');
+    if (newOpacity >= 0 && newOpacity <= 1) {
+        layer.setStyle({
+            fillOpacity: newOpacity
+        });
+    } else {
+        alert('Invalid opacity value. Please enter a number between 0.0 and 1.0');
+    }
+});
+var moveUpButton = document.createElement('button');
+moveUpButton.textContent = 'Move Up';
+moveUpButton.addEventListener('click', function() {
+    layer.bringToFront();
+    var ul = document.getElementById('layer-control');
+    if (ul.lastChild && li.previousSibling) {
+        ul.insertBefore(li, li.previousSibling);
+    }
+});
+
+var moveDownButton = document.createElement('button');
+moveDownButton.textContent = 'Move Down';
+moveDownButton.addEventListener('click', function() {
+    layer.bringToBack();
+    var ul = document.getElementById('layer-control');
+    if (ul.firstChild && li.nextSibling) {
+        ul.insertBefore(li.nextSibling, li);
+    }  
+});
+
+li.appendChild(moveUpButton);
+li.appendChild(moveDownButton);
+li.appendChild(opacityButton);
+li.appendChild(colorButton);
+                li.appendChild(colorButton);
+                li.appendChild(removeButton);
+                li.appendChild(renameButton);
+                document.getElementById('layer-control').appendChild(li);
+            };
+            reader.readAsText(file);
+        });
+    </script>
+</body>
+</html>

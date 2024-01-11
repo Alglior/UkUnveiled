@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Map</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/proj4js/2.7.5/proj4.js"></script>
+    <script src="https://unpkg.com/proj4leaflet"></script>
+    <script src="https://unpkg.com/shpjs/dist/shp.min.js"></script>
+
+
+    <style>
+        #mapid {
+            height: 300px;
+            width: 50%; /* or any other percentage or fixed size you want */
+            margin: auto;
+        }
+    </style>
+</head>
+<body>
+    <div id="mapid" style="height: 300px;"></div> <!-- Reduced height -->
+    <button id="expandButton">Expand Map</button> <!-- Added button -->
+    <button id="toggleLegend">Toggle Legend</button> <!-- Added button -->
+    <input id="geojsonFile" type="file" accept=".geojson" />
+    <input id="shapefile" type="file" accept=".zip" />
+    <div id="layers"></div>
+    <script>
+var map = L.map('mapid').setView([0, 0], 2); // Set initial view
+var layersControl = L.control.layers().addTo(map);
+var layers = {};
+
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    maxZoom: 19,
+}).addTo(map);
+
+function onEachFeature(feature, layer) {
+    if (feature.properties && feature.properties.name) {
+        layer.bindPopup(feature.properties.name);
+    }
+}
+
+function addContextMenuListener(label, name, layer) {
+    label.addEventListener('contextmenu', function(e) {
+        e.preventDefault();
+
+        var currentName = e.target.dataset.layerName;
+        var newName = prompt('Enter new name for the layer', currentName);
+        if (newName && newName !== currentName) {
+            layersControl.removeLayer(layer);
+            layersControl.addOverlay(layer, newName);
+            layers[newName] = layers[currentName];
+            delete layers[currentName];
+
+            e.target.dataset.layerName = newName;
+
+            // Remove the old event listener
+            e.target.removeEventListener('contextmenu', arguments.callee);
+
+            // Get the new label
+            var container = layersControl.getContainer();
+            var inputs = container.getElementsByTagName('input');
+            var lastInput = inputs[inputs.length - 1];
+            var newLabel = lastInput.parentNode;
+
+            // Add the event listener to the new label
+            addContextMenuListener(newLabel, newName, layer);
+        }
+    });
+}
+
+function addContextMenuListener(label, name, layer) {
+    label.addEventListener('click', function(e) { // Changed from 'contextmenu' to 'click'
+        e.preventDefault();
+
+        var currentName = e.target.dataset.layerName;
+        var newName = prompt('Enter new name for the layer', currentName);
+        if (newName && newName !== currentName) {
+            layersControl.removeLayer(layer);
+            layersControl.addOverlay(layer, newName);
+            layers[newName] = layers[currentName];
+            delete layers[currentName];
+
+            e.target.dataset.layerName = newName;
+
+            // Remove the old event listener
+            e.target.removeEventListener('click', arguments.callee); // Changed from 'contextmenu' to 'click'
+
+            // Get the new label
+            var container = layersControl.getContainer();
+            var inputs = container.getElementsByTagName('input');
+            var lastInput = inputs[inputs.length - 1];
+            var newLabel = lastInput.parentNode;
+
+            // Add the event listener to the new label
+            addContextMenuListener(newLabel, newName, layer);
+        }
+    });
+}
+
+document.getElementById('geojsonFile').addEventListener('change', function(e) {
+    var file = e.target.files[0];
+    var reader = new FileReader();
+    reader.onload = function(e) {
+        var data = JSON.parse(e.target.result);
+        var geoJsonLayer = L.geoJson(data, {
+            onEachFeature: onEachFeature
+        }).addTo(map);
+        addLayer(file.name, geoJsonLayer);
+    };
+    reader.readAsText(file);
+});
+
+document.getElementById('shapefile').addEventListener('change', function(e) {
+    var file = e.target.files[0];
+    var reader = new FileReader();
+    reader.onload = function(e) {
+        shp(e.target.result).then(function(geojson) {
+            var geoJsonLayer = L.geoJson(geojson, {
+                onEachFeature: onEachFeature
+            }).addTo(map);
+            addLayer(file.name, geoJsonLayer);
+        });
+    };
+    reader.readAsArrayBuffer(file);
+});
+document.getElementById('expandButton').addEventListener('click', function() {
+    var mapDiv = document.getElementById('mapid');
+    if (mapDiv.style.height === '600px' && mapDiv.style.width === '80%') {
+        mapDiv.style.height = '300px';
+        mapDiv.style.width = '50%';
+    } else {
+        mapDiv.style.height = '600px';
+        mapDiv.style.width = '80%';
+    }
+    map.invalidateSize(); // Inform Leaflet of the size change
+});
+document.getElementById('toggleLegend').addEventListener('click', function() {
+        var legend = document.querySelector('.leaflet-control-layers');
+        if (legend.style.display === 'none') {
+            legend.style.display = '';
+        } else {
+            legend.style.display = 'none';
+        }
+    });
+
+   
+    </script>
+</body>
+</html>

@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>HTML Page Creator</title>
+    <style>
+        
+        .container { width: 80%; margin: auto; padding-top: 50px; }
+        textarea, input[type="text"], input[type="url"], button { width: 100%; }
+        #userContent { border: 1px solid #ccc; min-height: 200px; padding: 10px; }
+        h1 { margin: 0; overflow-wrap: break-word; }
+        table {
+            width: 100%; /* Set the table to occupy 100% of its container width */
+            border-collapse: collapse; /* Optional for styling purposes */
+        }
+
+        th, td {
+            border: 1px solid black; /* Optional border styling */
+            padding: 8px; /* Optional padding for cells */
+        }
+/* Fixed styles for horizontal toolbar at the top of the page */
+.toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px; /* space between toolbar items */
+    align-items: flex-start;
+    position: fixed; /* Fixed positioning relative to the viewport */
+    top: 0; /* Align to the top of the viewport */
+    left: 0; /* Align to the left of the viewport */
+    width: 100%; /* Span the full width of the viewport */
+    background: white; /* Add a background to make sure text is readable over page content */
+    z-index: 1000; /* High z-index to ensure the toolbar is above other content */
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2); /* Optional: adds a shadow for better separation from page content */
+}
+
+.toolbar > * {
+    flex: 1; /* each toolbar item will take equal width */
+    min-width: 100px; /* minimum width for each item */
+    margin-top: auto; /* push item to the bottom */
+}
+
+
+
+
+    </style>
+<div class="toolbar">
+    <!-- Title controls -->
+    <input type="text" id="pageTitle" placeholder="Enter Title">
+    <button onclick="toggleTitleBox()">TITLE</button>
+
+    <div id="titleBox" style="display: none;">
+        <button onclick="addTitle()">Add Title</button>
+        <button onclick="alignTitle('left')">Left</button>
+        <button onclick="alignTitle('center')">Center</button>
+        <button onclick="alignTitle('right')">Right</button>
+    </div>
+
+    <!-- Text alignment controls -->
+    <button onclick="toggleAlignmentBox()">TEXT</button>
+
+    <div id="alignmentBox" style="display: none;">
+        <button onclick="alignSelectedText('left')">Align Left</button>
+        <button onclick="alignSelectedText('center')">Center</button>
+        <button onclick="alignSelectedText('right')">Align Right</button>
+    </div>
+
+    <!-- Image controls -->
+    <input type="file" id="imageInput" accept="image/*">
+    <div class="button-container">
+        <button onclick="toggleImageControlBox()">Image</button>
+    </div>
+
+    <div id="imageControlBox" style="display: none;">
+        <button onclick="addImage()">Add Image</button>
+        <button onclick="alignImage('left')">Left</button>
+        <button onclick="alignImage('center')">Center</button>
+        <button onclick="alignImage('right')">Right</button>
+        <button onclick="deleteSelectedImage()">Delete Image</button>
+
+        <!-- Image size controls -->
+        <input type="number" id="imageWidth" placeholder="Width (px)">
+        <input type="number" id="imageHeight" placeholder="Height (px)">
+        <button onclick="resizeImage()">Resize Image</button>
+    </div>
+
+    <!-- HTML file input -->
+    <input type="file" id="htmlInput" accept=".html">
+    <button onclick="insertHtmlFile()">HTML</button>    
+<!-- Add this in your HTML under the "container" div -->
+<select id="iframeSelector">
+    <option value="">Iframe</option>
+</select>
+
+<!-- Add these elements in your HTML -->
+<label for="iframeWidth">Width (px):</label>
+<input type="number" id="iframeWidth" placeholder="Enter width">
+
+<label for="iframeHeight">Height (px):</label>
+<input type="number" id="iframeHeight" placeholder="Enter height">
+
+<button onclick="resizeSelectedIframe()">ISize</button>
+
+</div>
+
+</head>
+<body>
+    <div class="container">
+        <h2>Create Your HTML Page</h2>
+        <input type="text" id="pageName" placeholder="Enter Page Name">
+        <br></br>
+
+        <div id="userContent" contenteditable="true"></div>
+        
+                <!-- Add this in your HTML under the "container" div -->
+                <div id="iframeContainer"></div>
+                <button onclick="addIframe()">Iframe</button>
+                
+
+
+
+        
+
+
+
+<h2>Create </h2>
+
+        <button onclick="generateHTML()">Create Page</button>
+        <br></br>
+        <br></br>
+    </div>
+    <script>
+        function generateHTML() {
+            var pageName = document.getElementById('pageName').value;
+            var userContent = document.getElementById('userContent').innerHTML;
+
+// Get all iframes
+var iframes = document.querySelectorAll('iframe');
+iframes.forEach(function(iframe) {
+    var doc = iframe.contentDocument || iframe.contentWindow.document;
+    
+    // Make all content non-editable
+    var editableElements = doc.querySelectorAll('[contenteditable="true"]');
+    editableElements.forEach(function(element) {
+        element.removeAttribute('contenteditable');
+    });
+});
+
+
+    var allIframeContent = Array.from(iframes).map(iframe => getIframeContent(iframe)).join('');
+
+    // Generate the HTML content
+    var newHTML = `
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>${pageName}</title>
+    <meta name="description" content="website description" />
+    <meta name="keywords" content="website keywords, website keywords" />
+    <meta http-equiv="content-type" content="text/html; charset=windows-1252" />
+    <link rel="stylesheet" type="text/css" href="../style/style.css" title="style" />
+    <link rel="icon" type="image/x-icon" href="../favicon.ico">
+</head>
+<body>
+    <div id="main">
+    <div id="header">
+      <div id="logo">
+	  <div id="logo_image">
+	      <a href="../index.html">
+		<img src="../logo.png" alt="Logo Image">
+			</div>
+        <div id="logo_text">
+          <!-- class="logo_colour", allows you to change the colour of the text -->
+          <h1><a href="index.html">UK <span class="logo_colour">Unveiled</span></a></h1>
+        </div>
+        
+      </div>
+
+      <div id="menubar">
+        <ul id="menu">
+          
+
+
+          <!-- put class="selected" in the li tag for the selected page - to highlight which page you're on -->
+          <li><a href="../index.html">Home</a></li>
+          <li><a href="../main.html">News</a></li>
+
+
+
+
+        </ul>
+        <div id="menu-button">Menu</div>
+
+      </div>
+    </div>
+    <div id="site_content">
+
+        ${userContent}
+        ${allIframeContent}
+    </div>
+    <div id="footer">
+      <img src="../logo.png" alt="Logo Image">
+    </div>
+  </div>
+</body>
+</html>
+    `;
+    // Create a Blob from the HTML String
+    var blob = new Blob([newHTML], {type: 'text/html'});
+    
+    // Create a link to the Blob
+    var downloadLink = document.createElement('a');
+    downloadLink.href = URL.createObjectURL(blob);
+    downloadLink.download = pageName + '.html';
+
+    // Append the link to the body, click it, and then remove it
+    document.body.appendChild(downloadLink);
+    downloadLink.click();
+    document.body.removeChild(downloadLink);
+
+    // Optional: Revoke the Blob URL
+    URL.revokeObjectURL(downloadLink.href);
+
+    var newWindow = window.open('', '_blank');
+            newWindow.document.write(newHTML);
+        }
+
+        function addTitle() {
+    var title = document.getElementById('pageTitle').value;
+    var iframeSelector = document.getElementById('iframeSelector');
+    var selectedIframeId = iframeSelector && iframeSelector.value;
+    var userContent = document.getElementById('userContent');
+
+    if (selectedIframeId) {
+        var selectedIframe = document.getElementById(selectedIframeId);
+        if (selectedIframe && title.trim() !== '') {
+            var iframeDoc = selectedIframe.contentWindow.document;
+            iframeDoc.body.innerHTML = '<h1>' + title + '</h1>' + iframeDoc.body.innerHTML;
+        }
+    } else if (title.trim() !== '') {
+        userContent.innerHTML = '<h1>' + title + '</h1>' + userContent.innerHTML;
+    }
+}
+
+function alignTitle(position) {
+    var iframeSelector = document.getElementById('iframeSelector');
+    var selectedIframeId = iframeSelector && iframeSelector.value;
+    var userContent = document.getElementById('userContent');
+
+    if (selectedIframeId) {
+        var selectedIframe = document.getElementById(selectedIframeId);
+        if (selectedIframe) {
+            var iframeDoc = selectedIframe.contentWindow.document;
+            var titleElement = iframeDoc.querySelector('h1');
+            if (titleElement) {
+                titleElement.style.textAlign = position;
+            } else {
+                alert("Please add a title first.");
+            }
+        }
+    } else {
+        var titleElement = userContent.querySelector('h1');
+        if (titleElement) {
+            titleElement.style.textAlign = position;
+        } else {
+            alert("Please add a title first.");
+        }
+    }
+}
+
+
+function getSelectionHtml(iframeDoc) {
+    var html = "";
+    var sel, range;
+    if (iframeDoc) {
+        sel = iframeDoc.getSelection();
+    } else {
+        sel = window.getSelection();
+    }
+
+    if (sel && sel.rangeCount) {
+        var container = document.createElement("div");
+        for (var i = 0, len = sel.rangeCount; i < len; ++i) {
+            container.appendChild(sel.getRangeAt(i).cloneContents());
+        }
+        html = container.innerHTML;
+    }
+    return html;
+}
+
+function alignSelectedText(position) {
+    var iframeSelector = document.getElementById('iframeSelector');
+    var selectedIframeId = iframeSelector && iframeSelector.value;
+    var selectedIframe = selectedIframeId ? document.getElementById(selectedIframeId) : null;
+    var docToUse = selectedIframe ? selectedIframe.contentDocument || selectedIframe.contentWindow.document : document;
+
+    var selectedHtml = getSelectionHtml(docToUse);
+    if (selectedHtml) {
+        var alignedHtml = '<div style="text-align:' + position + ';">' + selectedHtml + '</div>';
+        if (selectedIframe) {
+            // For iframe content
+            docToUse.execCommand('insertHTML', false, alignedHtml);
+        } else {
+            // For non-iframe content
+            document.execCommand('insertHTML', false, alignedHtml);
+        }
+    } else {
+        alert("Please select some text first.");
+    }
+}
+
+
+function getSelectedIframeDocument() {
+    var iframeSelector = document.getElementById('iframeSelector');
+    var selectedIframeId = iframeSelector.value;
+    if (selectedIframeId) {
+        var iframe = document.getElementById(selectedIframeId);
+        return iframe.contentDocument || iframe.contentWindow.document;
+    }
+    return null;
+}
+
+function addImage() {
+    var file = document.getElementById('imageInput').files[0];
+    var reader = new FileReader();
+    reader.onloadend = function () {
+        var imgHTML = "<img src='" + reader.result + "' style='max-width:100%;' class='editable-image'>";
+        var div = document.createElement('div');
+        div.innerHTML = imgHTML;
+        var img = div.firstChild;
+
+        // Get the document of the selected iframe
+        var selectedIframeDoc = getSelectedIframeDocument();
+
+        if (selectedIframeDoc) {
+            // Add the image and editable content inside the selected iframe
+            selectedIframeDoc.body.appendChild(div);
+            selectedIframeDoc.body.appendChild(editableDiv); // Add the editable div
+        } else {
+            // No iframe selected, add the image and editable content to the main content
+            var userContent = document.getElementById('userContent');
+            userContent.appendChild(div);
+            userContent.appendChild(editableDiv); // Add the editable div
+        }
+    };
+    if (file) {
+        reader.readAsDataURL(file);
+    }
+}
+
+var selectedImage = null;
+
+// Existing selectImage function modification
+function selectImage(img) {
+    if (selectedImage === img) {
+        // If the clicked image is already selected, deselect it
+        selectedImage.style.border = 'none';
+        selectedImage = null;
+        return;
+    }
+
+    if (selectedImage) {
+        selectedImage.style.border = 'none'; // Remove border from previously selected image
+    }
+    selectedImage = img;
+    img.style.border = '2px solid blue'; // Highlight the selected image
+}
+
+// Add a click event listener to the document for deselection
+document.addEventListener('click', function(event) {
+    // Check if the click is outside the selected image
+    if (selectedImage && event.target !== selectedImage) {
+        selectedImage.style.border = 'none';
+        selectedImage = null;
+    }
+
+    var userContent = document.getElementById('userContent');
+    if (userContent.contains(event.target)) {
+        userContent.focus();
+    }
+});
+
+function alignImage(position) {
+    var images = document.getElementById('userContent').getElementsByTagName('img');
+    if (images.length === 0) {
+        alert("Please add an image first.");
+        return;
+    }
+    var lastImage = images[images.length - 1];
+    if (position === 'left' || position === 'right') {
+        lastImage.style.display = 'block';
+        lastImage.style.marginLeft = position === 'left' ? '0' : 'auto';
+        lastImage.style.marginRight = position === 'right' ? '0' : 'auto';
+        lastImage.style.marginTop = '10px';
+        lastImage.style.marginBottom = '10px';
+    } else if (position === 'center') {
+        lastImage.style.display = 'block';
+        lastImage.style.margin = '10px auto';
+    }
+}
+function deleteSelectedImage() {
+    if (selectedImage) {
+        selectedImage.parentNode.removeChild(selectedImage);
+        selectedImage = null;
+    } else {
+        alert("Please select an image to delete.");
+    }
+}
+// Event listeners for Enter key on width and height inputs
+document.getElementById('imageWidth').addEventListener('keypress', function (e) {
+    if (e.key === 'Enter') {
+        resizeImage();
+    }
+});
+
+document.getElementById('imageHeight').addEventListener('keypress', function (e) {
+    if (e.key === 'Enter') {
+        resizeImage();
+    }
+});
+
+function resizeImage() {
+    if (selectedImage) {
+        var width = document.getElementById('imageWidth').value;
+        var height = document.getElementById('imageHeight').value;
+        
+        // Set the new width and height
+        if (width !== '') {
+            selectedImage.style.width = width + 'px';
+        }
+        if (height !== '') {
+            selectedImage.style.height = height + 'px';
+        }
+    } else {
+        alert("Please select an image to resize.");
+    }
+}
+function toggleTitleBox() {
+    var titleBox = document.getElementById("titleBox");
+    if (titleBox.style.display === "none") {
+        titleBox.style.display = "block";
+    } else {
+        titleBox.style.display = "none";
+    }
+}
+function toggleAlignmentBox() {
+    var alignmentBox = document.getElementById("alignmentBox");
+    if (alignmentBox.style.display === "none") {
+        alignmentBox.style.display = "block";
+    } else {
+        alignmentBox.style.display = "none";
+    }
+}
+function toggleImageControlBox() {
+    var imageControlBox = document.getElementById("imageControlBox");
+    if (imageControlBox.style.display === "none") {
+        imageControlBox.style.display = "block";
+    } else {
+        imageControlBox.style.display = "none";
+    }
+}
+function insertHtmlFile() {
+    var fileInput = document.getElementById('htmlInput');
+    var file = fileInput.files[0];
+    var iframeSelector = document.getElementById('iframeSelector');
+    var selectedIframeId = iframeSelector.value;
+
+    if (!file) {
+        alert('Please select an HTML file first.');
+        return;
+    }
+
+    if (!selectedIframeId) {
+        alert('Please select an iframe first.');
+        return;
+    }
+
+    var reader = new FileReader();
+    reader.onload = function(e) {
+        var iframe = document.getElementById(selectedIframeId);
+        var doc = iframe.contentWindow.document;
+        
+        // Get the existing content of the iframe
+        var existingContent = doc.body.innerHTML;
+
+        // Append the new HTML content to the existing content
+        doc.open();
+        doc.write(existingContent + e.target.result);
+
+
+    };
+
+    reader.readAsText(file);
+}
+
+
+
+let iframeCount = 0;
+
+function addIframe() {
+    iframeCount++;
+    const iframeContainer = document.getElementById('iframeContainer');
+    const newIframe = document.createElement('iframe');
+    newIframe.id = 'iframe' + iframeCount;
+    newIframe.style.width = '100%';
+    newIframe.style.height = '600px';
+    iframeContainer.appendChild(newIframe);
+
+    // Initialize the iframe in design mode
+    const doc = newIframe.contentWindow.document;
+    doc.open();
+    doc.write('<html><body></body></html>');
+    doc.close();
+    doc.designMode = "on"; // Enable design mode
+
+    // Update the iframe selector dropdown
+    const iframeSelector = document.getElementById('iframeSelector');
+    const newOption = document.createElement('option');
+    newOption.value = newIframe.id;
+    newOption.textContent = 'Iframe ' + iframeCount;
+    iframeSelector.appendChild(newOption);
+}
+
+
+function addTextToSelectedIframe() {
+    var iframeSelector = document.getElementById('iframeSelector');
+    var selectedIframeId = iframeSelector.value;
+
+    if (!selectedIframeId) {
+        alert('Please select an iframe first.');
+        return;
+    }
+
+    var text = prompt("Enter text to add:", "");
+    if (text === null || text === "") {
+        alert("No text entered.");
+        return;
+    }
+
+    var iframe = document.getElementById(selectedIframeId);
+    var doc = iframe.contentDocument || iframe.contentWindow.document;
+    var editableContent = doc.getElementById('editableContent');
+    
+    // Append the text to the editable container
+    editableContent.innerHTML += text;
+}
+
+function resizeSelectedIframe() {
+    var iframeSelector = document.getElementById('iframeSelector');
+    var selectedIframeId = iframeSelector.value;
+
+    if (!selectedIframeId) {
+        alert('Please select an iframe first.');
+        return;
+    }
+
+    var width = document.getElementById('iframeWidth').value;
+    var height = document.getElementById('iframeHeight').value;
+
+    if (!width || !height) {
+        alert('Please enter both width and height.');
+        return;
+    }
+
+    var iframe = document.getElementById(selectedIframeId);
+    iframe.style.width = width + 'px';
+    iframe.style.height = height + 'px';
+}
+function getIframeContent(iframe) {
+    var doc = iframe.contentDocument || iframe.contentWindow.document;
+    return '<div class="iframe-content">' + doc.body.innerHTML + '</div>';
+}
+// Function to get the document of the selected iframe
+function getSelectedIframeDocument() {
+    var iframeSelector = document.getElementById('iframeSelector');
+    var selectedIframeId = iframeSelector.value;
+    if (selectedIframeId) {
+        var iframe = document.getElementById(selectedIframeId);
+        return iframe.contentDocument || iframe.contentWindow.document;
+    }
+    return null;
+}
+
+
+    </script>
+</body>
+</html>

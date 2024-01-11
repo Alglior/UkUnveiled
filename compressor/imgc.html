@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.7.1/jszip.min.js"></script>
+    <link rel="icon" type="image/x-icon" href="../favicon.ico">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="../style/style.css">
+    <title>UK Unveiled</title>
+    <meta charset="UTF-8">
+    <meta name="description" content="website description" />
+    <meta name="keywords" content="website keywords, website keywords" />
+    <meta http-equiv="content-type" content="text/html; charset=windows-1252" />
+
+    
+</head>
+<div id="main">
+    <div id="header">
+      <div id="logo">
+	  <div id="logo_image">
+	      <a href="../index.html">
+		<img src="../logo.png" alt="Logo Image">
+			</div>
+        <div id="logo_text">
+          <!-- class="logo_colour", allows you to change the colour of the text -->
+          <h1><a href="../index.html">UK <span class="logo_colour">Unveiled</span></a></h1>
+        </div>
+        
+      </div>
+
+      <div id="menubar">
+        <ul id="menu">
+          
+
+
+          <!-- put class="selected" in the li tag for the selected page - to highlight which page you're on -->
+          <li><a href="../index.html">Home</a></li>
+          <li><a href="../main.html">News</a></li>
+          <li><a href="imgc.html"> Image Compressor</a></li>
+
+
+
+        
+
+          
+
+
+
+        </ul>
+        <div id="menu-button">Menu</div>
+
+      </div>
+    </div>
+</div>
+<body>
+    <div class="container">
+        <h2 class="welcome-heading">Image Compressor</h2>
+        <input type="file" id="imageInput" accept="image/*" multiple>
+        <h1>Compressor Strength:</h1>
+        <h2>A compression quality setting of 0.5 indicates a lower quality but higher compression rate. </h2>
+        <div class="quality-buttons">
+            <button class="quality-btn" data-quality="0.5">0.5</button>
+            <button class="quality-btn" data-quality="0.6">0.6</button>
+            <button class="quality-btn" data-quality="0.7">0.7</button>
+            <button class="quality-btn" data-quality="0.8">0.8</button>
+            <button class="quality-btn" data-quality="0.9">0.9</button>
+        </div>
+        <div id="downloadZipBtnContainer"></div>
+        <div id="imagePreviewContainer"></div>
+    </div>
+    <script src="script.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  
+
+    <script src ="../js/button_hide.js"></script>
+    <div id="footer">
+        <img src="../logo.png" alt="Logo Image">
+      </div>
+    </div>
+</body>
+</html>
