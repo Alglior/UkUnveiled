@@ -97,6 +97,35 @@
             styleNode.setAttribute('href', 'https://unpkg.com/leaflet/dist/leaflet.css');
             clonedNode.appendChild(styleNode);
 
+            // Add Leaflet initialization code
+            var initScriptNode = document.createElement('script');
+            initScriptNode.textContent = `
+                window.onload = function() {
+                    var map = L.map('mapid').setView([51.505, -0.09], 13);
+                    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
+                        maxZoom: 19,
+                    }).addTo(map);
+                }
+            `;
+            clonedNode.appendChild(initScriptNode);
+
+            // Add custom JavaScript code
+            var customScriptNode = document.createElement('script');
+            customScriptNode.textContent = `
+                window.onload = function() {
+                    var map = L.map('mapid').setView([51.505, -0.09], 13);
+                    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                        attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors',
+                        maxZoom: 19,
+                    }).addTo(map);
+                    L.marker([51.5, -0.09]).addTo(map)
+                        .bindPopup('A pretty CSS3 popup.<br> Easily customizable.')
+                        .openPopup();
+                }
+            `;
+            clonedNode.appendChild(customScriptNode);
+
             var htmlData = clonedNode.outerHTML;
             var dataStr = "data:text/html;charset=utf-8," + encodeURIComponent(htmlData);
             var downloadAnchorNode = document.createElement('a');
@@ -106,7 +135,6 @@
             downloadAnchorNode.click(); // simulate a click
             document.body.removeChild(downloadAnchorNode); // remove the element from the body
         });
-        
         function addLayerControl(file, layer, id) {
             var li = document.createElement('li');
             li.textContent = file.name;
